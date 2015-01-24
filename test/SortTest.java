@@ -27,7 +27,7 @@ public class SortTest extends FunctionalTest {
         Map<String, File> fileMap = new HashMap<String, File>();
         paramMap.put("json", jsonUnsorted);
         //fileMap.put("xmlFile", new File("test/item.xml);
-        Response response = POST("/addJson", paramMap, fileMap);
+        Response response = POST("/sortJson", paramMap, fileMap);
         assertIsOk(response);
         System.out.println(response);
         assertEquals(jsonSorted, getContent(response));

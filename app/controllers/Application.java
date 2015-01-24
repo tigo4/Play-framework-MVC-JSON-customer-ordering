@@ -21,7 +21,7 @@ public class Application extends Controller {
         render();
     }
 
-    public static void addJson(final String json) {
+    public static void sortJson(final String json) {
 
         /***** non-blocking *****/
         /*
@@ -38,14 +38,14 @@ public class Application extends Controller {
         await(promise, new F.Action<String>() {
             public void invoke(String result) {
                 renderArgs.put("json", result);
-                renderTemplate("Application/addJson.html");
+                renderTemplate("Application/sortJson.html");
             }
         });
 
     }
 
     private static String process(String json) {
-        Logger.debug("addJson");
+        Logger.debug("sortJson");
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);

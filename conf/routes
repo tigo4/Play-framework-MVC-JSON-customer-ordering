@@ -5,7 +5,7 @@
 # Home page
 GET     /                                       Application.index
 
-POST    /addJson                                controllers.Application.addJson()
+POST    /sortJson                                controllers.Application.sortJson()
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
