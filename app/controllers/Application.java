@@ -32,13 +32,14 @@ public class Application extends Controller {
         JSONObject jsonObject = null;
         List list = new ArrayList<DateTime>();
         String dateTime = null;
+        DateTime joda = null;
         Map<String, JSONObject> map = new HashMap<String, JSONObject>();
         System.out.println("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 dateTime = jsonObject.getString("duetime");
-                DateTime joda = DateTime.parse(dateTime);
+                joda = DateTime.parse(dateTime);
                 System.out.println(joda);
                 // payload
                 list.add(joda);
