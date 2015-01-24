@@ -32,6 +32,7 @@ public class Application extends Controller {
         JSONObject jsonObject = null;
         List list = new ArrayList<DateTime>();
         String dateTime = null;
+        Map<String, JSONObject> map = new HashMap<String, JSONObject>();
         System.out.println("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
@@ -39,7 +40,9 @@ public class Application extends Controller {
                 dateTime = jsonObject.getString("duetime");
                 DateTime joda = DateTime.parse(dateTime);
                 System.out.println(joda);
+                // payload
                 list.add(joda);
+                map.put(joda.toString(), jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
@@ -48,12 +51,31 @@ public class Application extends Controller {
         }
 
         Collections.sort(list);
+        StringBuilder sb = new StringBuilder("");
         System.out.println("\n\n===== sorted ======================");
+        sb.append("[");
         for (int ii=0; ii<list.size(); ii++) {
             System.out.println(list.get(ii));
+            sb.append("{");
+            try {
+                sb.append("\"id\":\"" + map.get(list.get(ii).toString()).getInt("id") + "\",");
+                sb.append("\"name\":\"" + map.get(list.get(ii).toString()).getString("name") + "\",");
+                sb.append("\"duetime\":\"" + map.get(list.get(ii).toString()).getString("duetime") + "\",");
+                sb.append("\"jointime\":\"" + map.get(list.get(ii).toString()).getString("jointime") + "\"");
+            } catch (Exception e) {
+                json = e.getMessage();
+                e = null;
+                render(json);
+            }
+            sb.append("}");
+            if (ii < (list.size()-1))
+                sb.append(",");
         }
+        sb.append("]");
 
-        json = jsonArray.toString();
+        json = sb.toString();
+        //json = sortedJSONArray.toString();
+        //json = jsonArray.toString();
         //System.out.println(json);
         render(json);
 
