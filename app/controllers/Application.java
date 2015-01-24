@@ -16,14 +16,8 @@ import play.jobs.*;
 
 public class Application extends Controller {
 
-    private static boolean debug = false;
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
     public static void index() {
-        if (debug)
-            System.out.println("index");
+        Logger.debug("index");
         render();
     }
 
@@ -51,13 +45,11 @@ public class Application extends Controller {
     }
 
     private static String process(String json) {
-        if (debug)
-            System.out.println("addJson");
+        Logger.debug("addJson");
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);
-            if (debug)
-                System.out.println(jsonArray.length());
+            Logger.debug(jsonArray.length()+"");
         } catch (Exception e) {
             json = e.getMessage();
             e = null;
@@ -68,15 +60,13 @@ public class Application extends Controller {
         String dateTime = null;
         DateTime joda = null;
         Map<String, JSONObject> map = new HashMap<String, JSONObject>();
-        if (debug)
-            System.out.println("\n\n********** unsorted ****************");
+        Logger.debug("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 dateTime = jsonObject.getString("duetime");
                 joda = DateTime.parse(dateTime);
-                if (debug)
-                    System.out.println(joda);
+                Logger.debug(joda+"");
                 // payload
                 list.add(joda);
                 map.put(joda.toString(), jsonObject);
@@ -89,12 +79,10 @@ public class Application extends Controller {
 
         Collections.sort(list);
         StringBuilder sb = new StringBuilder("");
-        if (debug)
-            System.out.println("\n\n===== sorted ======================");
+        Logger.debug("\n\n===== sorted ======================");
         sb.append("[");
         for (int ii=0; ii<list.size(); ii++) {
-            if (debug)
-                System.out.println(list.get(ii));
+            Logger.debug(list.get(ii)+"");
             sb.append("{");
             try {
                 sb.append("\"id\":\"" + map.get(list.get(ii).toString()).getInt("id") + "\",");
