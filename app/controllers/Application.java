@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 
 public class Application extends Controller {
 
-    private boolean debug = false;
+    private static boolean debug = false;
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
