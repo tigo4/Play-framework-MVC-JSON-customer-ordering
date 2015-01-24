@@ -16,7 +16,9 @@ public class SortTest extends FunctionalTest {
         String jsonSorted = "";
         try {
             jsonUnsorted = FileUtils.readFileToString(VirtualFile.fromRelativePath("/test/customer-ordering.json").getRealFile(), "utf-8");
+            //jsonUnsorted = jsonUnsorted.replaceAll("\\r\\n|\\r|\\n", "");
             jsonSorted = FileUtils.readFileToString(VirtualFile.fromRelativePath("/test/sorted.json").getRealFile(), "utf-8");
+            //jsonSorted = jsonSorted.replaceAll("\\r\\n|\\r|\\n", "");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
@@ -29,6 +31,8 @@ public class SortTest extends FunctionalTest {
         assertIsOk(response);
         System.out.println(response);
         assertEquals(jsonSorted, getContent(response));
+        System.out.println("**********"+jsonSorted+"***********");
+        System.out.println("#########"+getContent(response)+"#########");
 
     }
 

@@ -10,6 +10,9 @@ import models.*;
 import org.json.*;
 
 import org.joda.time.DateTime;
+import play.libs.*;
+import play.libs.F.*;
+import play.jobs.*;
 
 public class Application extends Controller {
 
@@ -24,7 +27,30 @@ public class Application extends Controller {
         render();
     }
 
-    public static void addJson(String json) {
+    public static void addJson(final String json) {
+
+        /***** non-blocking *****/
+        /*
+           the http request will stay connected (blocked) but
+           the request execution will be automaticaly 
+           popped out of the thread to free server resources (non-block)
+           and accept new requests
+        */
+        Promise<String> promise = new Job() {
+            public String doJobWithResult() throws Exception {
+                return process(json);
+            }
+        }.now();
+        await(promise, new F.Action<String>() {
+            public void invoke(String result) {
+                renderArgs.put("json", result);
+                renderTemplate("Application/addJson.html");
+            }
+        });
+
+    }
+
+    private static String process(String json) {
         if (debug)
             System.out.println("addJson");
         JSONArray jsonArray = null;
@@ -35,7 +61,7 @@ public class Application extends Controller {
         } catch (Exception e) {
             json = e.getMessage();
             e = null;
-            render(json);
+            return json;
         }
         JSONObject jsonObject = null;
         List list = new ArrayList<DateTime>();
@@ -57,7 +83,7 @@ public class Application extends Controller {
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
-                render(json);
+                return json;
             }
         }
 
@@ -78,7 +104,7 @@ public class Application extends Controller {
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
-                render(json);
+                return json;
             }
             sb.append("}");
             if (ii < (list.size()-1))
@@ -87,8 +113,8 @@ public class Application extends Controller {
         sb.append("]");
 
         json = sb.toString();
-
-        render(json);
+    
+        return json;
 
     }
 
