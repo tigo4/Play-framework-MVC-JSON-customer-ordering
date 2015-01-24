@@ -14,12 +14,12 @@ import org.joda.time.DateTime;
 public class Application extends Controller {
 
     public static void index() {
-        System.out.println("hello1");
+        System.out.println("index");
         render();
     }
 
     public static void addJson(String json) {
-        System.out.println("hello2");
+        System.out.println("addJson");
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);
@@ -75,9 +75,7 @@ public class Application extends Controller {
         sb.append("]");
 
         json = sb.toString();
-        //json = sortedJSONArray.toString();
-        //json = jsonArray.toString();
-        //System.out.println(json);
+
         render(json);
 
     }
