@@ -2,3 +2,4 @@
 
 require:
     - play
+    - org.json -> org.json chargebee-1.0
