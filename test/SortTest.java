@@ -20,7 +20,7 @@ public class SortTest extends FunctionalTest {
             jsonSorted = FileUtils.readFileToString(VirtualFile.fromRelativePath("/test/sorted.json").getRealFile(), "utf-8");
             //jsonSorted = jsonSorted.replaceAll("\\r\\n|\\r|\\n", "");
         } catch (Exception e) {
-            Logger.error(e.getMessage());
+            System.err.println(e.getMessage());
             throw new RuntimeException(e);
         }
         Map<String, String> paramMap = new HashMap<String, String>();
@@ -29,10 +29,10 @@ public class SortTest extends FunctionalTest {
         //fileMap.put("xmlFile", new File("test/item.xml);
         Response response = POST("/addJson", paramMap, fileMap);
         assertIsOk(response);
-        Logger.info(response);
+        System.out.println(response);
         assertEquals(jsonSorted, getContent(response));
-        Logger.info("**********"+jsonSorted+"***********");
-        Logger.info("#########"+getContent(response)+"#########");
+        System.out.println("**********"+jsonSorted+"***********");
+        System.out.println("#########"+getContent(response)+"#########");
 
     }
 
