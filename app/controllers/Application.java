@@ -53,6 +53,7 @@ public class Application extends Controller {
         } catch (Exception e) {
             json = e.getMessage();
             e = null;
+            Logger.error(json);
             return json;
         }
         JSONObject jsonObject = null;
@@ -73,6 +74,7 @@ public class Application extends Controller {
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
+                Logger.error(json);
                 return json;
             }
         }
@@ -92,6 +94,7 @@ public class Application extends Controller {
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
+                Logger.error(json);
                 return json;
             }
             sb.append("}");
