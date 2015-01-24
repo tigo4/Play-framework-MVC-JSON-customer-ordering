@@ -13,17 +13,25 @@ import org.joda.time.DateTime;
 
 public class Application extends Controller {
 
+    private boolean debug = false;
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     public static void index() {
-        System.out.println("index");
+        if (debug)
+            System.out.println("index");
         render();
     }
 
     public static void addJson(String json) {
-        System.out.println("addJson");
+        if (debug)
+            System.out.println("addJson");
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);
-            System.out.println(jsonArray.length());
+            if (debug)
+                System.out.println(jsonArray.length());
         } catch (Exception e) {
             json = e.getMessage();
             e = null;
@@ -34,13 +42,15 @@ public class Application extends Controller {
         String dateTime = null;
         DateTime joda = null;
         Map<String, JSONObject> map = new HashMap<String, JSONObject>();
-        System.out.println("\n\n********** unsorted ****************");
+        if (debug)
+            System.out.println("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 dateTime = jsonObject.getString("duetime");
                 joda = DateTime.parse(dateTime);
-                System.out.println(joda);
+                if (debug)
+                    System.out.println(joda);
                 // payload
                 list.add(joda);
                 map.put(joda.toString(), jsonObject);
@@ -53,10 +63,12 @@ public class Application extends Controller {
 
         Collections.sort(list);
         StringBuilder sb = new StringBuilder("");
-        System.out.println("\n\n===== sorted ======================");
+        if (debug)
+            System.out.println("\n\n===== sorted ======================");
         sb.append("[");
         for (int ii=0; ii<list.size(); ii++) {
-            System.out.println(list.get(ii));
+            if (debug)
+                System.out.println(list.get(ii));
             sb.append("{");
             try {
                 sb.append("\"id\":\"" + map.get(list.get(ii).toString()).getInt("id") + "\",");
