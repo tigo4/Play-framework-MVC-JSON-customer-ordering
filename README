@@ -1,0 +1,6 @@
+Project: customer-ordering
+Goal: sort unsorted JSON data by duetime field - Joda time
+Framework: Play Framework version 1.2.7
+Fetch dependencies: play-1.2.7$ ./play dependencies customer-ordering
+Run app: play-1.2.7$ ./play run customer-ordering/
+Run tests: play-1.2.7$ ./play test customer-ordering/ and load browser url http://localhost:9000/@tests
