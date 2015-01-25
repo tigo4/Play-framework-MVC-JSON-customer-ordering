@@ -5,9 +5,13 @@
 # Home page
 GET     /                                       Application.index
 
-POST    /sortJson                                controllers.Application.sortJson()
+POST    /sortJson                               controllers.Application.sortJson()
 
-POST    /sortJsonBlock                                controllers.Application.sortJsonBlock()
+POST    /sortJsonBlock                          controllers.Application.sortJsonBlock()
+
+POST    /sortJsonAlternativeTreeSet             controllers.ApplicationAlternativeTreeSet.sortJsonAlternativeTreeSet()
+
+POST    /sortJsonAlternativeTreeMap             controllers.ApplicationAlternativeTreeMap.sortJsonAlternativeTreeMap()
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
