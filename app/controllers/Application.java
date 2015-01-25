@@ -44,6 +44,12 @@ public class Application extends Controller {
 
     }
 
+    public static void sortJsonBlock(final String json) {
+        String result = process(json);
+        renderArgs.put("json", result);
+        renderTemplate("Application/sortJson.html");
+    }
+
     private static String process(String json) {
         Logger.debug("sortJson");
         JSONArray jsonArray = null;

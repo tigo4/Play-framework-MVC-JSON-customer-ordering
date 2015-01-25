@@ -7,6 +7,8 @@ GET     /                                       Application.index
 
 POST    /sortJson                                controllers.Application.sortJson()
 
+POST    /sortJsonBlock                                controllers.Application.sortJsonBlock()
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
