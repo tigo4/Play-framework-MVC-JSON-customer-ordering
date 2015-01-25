@@ -57,7 +57,7 @@ public class ApplicationAlternativeTreeSet extends Controller {
         Set<DateTime> set = new TreeSet<DateTime>();
         String dateTime = null;
         DateTime joda = null;
-        Map<String, JSONObject> map = new HashMap<String, JSONObject>();
+        Map<DateTime, JSONObject> map = new HashMap<DateTime, JSONObject>();
         Logger.debug("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
@@ -68,7 +68,7 @@ public class ApplicationAlternativeTreeSet extends Controller {
                 // payload
                 //list.add(joda);
                 set.add(joda);
-                map.put(joda.toString(), jsonObject);
+                map.put(joda, jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
@@ -90,10 +90,10 @@ public class ApplicationAlternativeTreeSet extends Controller {
             Logger.debug(joda+"");
             sb.append("{");
             try {
-                sb.append("\"id\":\"" + map.get(joda.toString()).getInt("id") + "\",");
-                sb.append("\"name\":\"" + map.get(joda.toString()).getString("name") + "\",");
-                sb.append("\"duetime\":\"" + map.get(joda.toString()).getString("duetime") + "\",");
-                sb.append("\"jointime\":\"" + map.get(joda.toString()).getString("jointime") + "\"");
+                sb.append("\"id\":\"" + map.get(joda).getInt("id") + "\",");
+                sb.append("\"name\":\"" + map.get(joda).getString("name") + "\",");
+                sb.append("\"duetime\":\"" + map.get(joda).getString("duetime") + "\",");
+                sb.append("\"jointime\":\"" + map.get(joda).getString("jointime") + "\"");
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
