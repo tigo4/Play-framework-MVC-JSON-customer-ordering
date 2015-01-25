@@ -57,7 +57,7 @@ public class ApplicationAlternativeTreeMap extends Controller {
         // not needed now Set<DateTime> set = new TreeSet<DateTime>();
         String dateTime = null;
         DateTime joda = null;
-        TreeMap<String, JSONObject> map = new TreeMap<String, JSONObject>();
+        TreeMap<DateTime, JSONObject> map = new TreeMap<DateTime, JSONObject>();
         Logger.debug("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
@@ -68,7 +68,7 @@ public class ApplicationAlternativeTreeMap extends Controller {
                 // payload
                 //list.add(joda);
                 // not needed now since TreeMap is sorted set.add(joda);
-                map.put(joda.toString(), jsonObject);
+                map.put(joda, jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
@@ -83,7 +83,7 @@ public class ApplicationAlternativeTreeMap extends Controller {
         Logger.debug("\n\n===== sorted ======================");
         sb.append("[");
 
-        for (String mapDateTime : map.keySet()){
+        for (DateTime mapDateTime : map.keySet()){
             Logger.debug(mapDateTime+"");
             sb.append("{");
             try {
