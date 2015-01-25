@@ -66,7 +66,7 @@ public class Application extends Controller {
         List list = new ArrayList<DateTime>();
         String dateTime = null;
         DateTime joda = null;
-        Map<String, JSONObject> map = new HashMap<String, JSONObject>();
+        Map<DateTime, JSONObject> map = new HashMap<DateTime, JSONObject>();
         Logger.debug("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
@@ -76,7 +76,7 @@ public class Application extends Controller {
                 Logger.debug(joda+"");
                 // payload
                 list.add(joda);
-                map.put(joda.toString(), jsonObject);
+                map.put(joda, jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
@@ -93,10 +93,10 @@ public class Application extends Controller {
             Logger.debug(list.get(ii)+"");
             sb.append("{");
             try {
-                sb.append("\"id\":\"" + map.get(list.get(ii).toString()).getInt("id") + "\",");
-                sb.append("\"name\":\"" + map.get(list.get(ii).toString()).getString("name") + "\",");
-                sb.append("\"duetime\":\"" + map.get(list.get(ii).toString()).getString("duetime") + "\",");
-                sb.append("\"jointime\":\"" + map.get(list.get(ii).toString()).getString("jointime") + "\"");
+                sb.append("\"id\":\"" + map.get(list.get(ii)).getInt("id") + "\",");
+                sb.append("\"name\":\"" + map.get(list.get(ii)).getString("name") + "\",");
+                sb.append("\"duetime\":\"" + map.get(list.get(ii)).getString("duetime") + "\",");
+                sb.append("\"jointime\":\"" + map.get(list.get(ii)).getString("jointime") + "\"");
             } catch (Exception e) {
                 json = e.getMessage();
                 e = null;
