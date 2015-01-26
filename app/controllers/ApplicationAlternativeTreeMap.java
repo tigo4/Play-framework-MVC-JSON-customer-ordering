@@ -14,6 +14,8 @@ import play.libs.*;
 import play.libs.F.*;
 import play.jobs.*;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 public class ApplicationAlternativeTreeMap extends Controller {
 
     public static void sortJsonAlternativeTreeMap(final String json) {
@@ -47,8 +49,8 @@ public class ApplicationAlternativeTreeMap extends Controller {
             Logger.debug(jsonArray.length()+"");
         } catch (Exception e) {
             json = e.getMessage();
+            Logger.error(json + ExceptionUtils.getStackTrace(e), e);
             e = null;
-            Logger.error(json);
             return json;
         }
         JSONObject jsonObject = null;
@@ -71,8 +73,8 @@ public class ApplicationAlternativeTreeMap extends Controller {
                 map.put(joda, jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
+                Logger.error(json + ExceptionUtils.getStackTrace(e), e);
                 e = null;
-                Logger.error(json);
                 return json;
             }
         }
@@ -89,12 +91,12 @@ public class ApplicationAlternativeTreeMap extends Controller {
             try {
                 sb.append("\"id\":\"" + map.get(mapDateTime).getInt("id") + "\",");
                 sb.append("\"name\":\"" + map.get(mapDateTime).getString("name") + "\",");
-                sb.append("\"duetime\":\"" + map.get(mapDateTime.toString()).getString("duetime") + "\",");
-                sb.append("\"jointime\":\"" + map.get(mapDateTime.toString()).getString("jointime") + "\"");
+                sb.append("\"duetime\":\"" + map.get(mapDateTime).getString("duetime") + "\",");
+                sb.append("\"jointime\":\"" + map.get(mapDateTime).getString("jointime") + "\"");
             } catch (Exception e) {
                 json = e.getMessage();
+                Logger.error(json + ExceptionUtils.getStackTrace(e), e);
                 e = null;
-                Logger.error(json);
                 return json;
             }
             sb.append("}");
