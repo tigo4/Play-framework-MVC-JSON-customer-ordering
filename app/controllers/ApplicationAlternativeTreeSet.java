@@ -14,6 +14,8 @@ import play.libs.*;
 import play.libs.F.*;
 import play.jobs.*;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 public class ApplicationAlternativeTreeSet extends Controller {
 
     public static void sortJsonAlternativeTreeSet(final String json) {
@@ -47,8 +49,8 @@ public class ApplicationAlternativeTreeSet extends Controller {
             Logger.debug(jsonArray.length()+"");
         } catch (Exception e) {
             json = e.getMessage();
+            Logger.error(json + ExceptionUtils.getStackTrace(e), e);
             e = null;
-            Logger.error(json);
             return json;
         }
         JSONObject jsonObject = null;
@@ -71,8 +73,8 @@ public class ApplicationAlternativeTreeSet extends Controller {
                 map.put(joda, jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
+                Logger.error(json + ExceptionUtils.getStackTrace(e), e);
                 e = null;
-                Logger.error(json);
                 return json;
             }
         }
@@ -96,8 +98,8 @@ public class ApplicationAlternativeTreeSet extends Controller {
                 sb.append("\"jointime\":\"" + map.get(joda).getString("jointime") + "\"");
             } catch (Exception e) {
                 json = e.getMessage();
+                Logger.error(json + ExceptionUtils.getStackTrace(e), e);
                 e = null;
-                Logger.error(json);
                 return json;
             }
             sb.append("}");
