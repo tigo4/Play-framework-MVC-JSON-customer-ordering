@@ -23,7 +23,7 @@ public class Application extends Controller {
         render();
     }
 
-    public static void sortJson(final String json) {
+    public static void sortJson(final String body) {
 
         /***** non-blocking *****/
         /*
@@ -34,7 +34,7 @@ public class Application extends Controller {
         */
         Promise<String> promise = new Job() {
             public String doJobWithResult() throws Exception {
-                return process(json);
+                return process(body);
             }
         }.now();
         await(promise, new F.Action<String>() {
@@ -53,8 +53,10 @@ public class Application extends Controller {
     }
 
     private static String process(String json) {
+
         Logger.debug("sortJson");
         JSONArray jsonArray = null;
+
         try {
             jsonArray = new JSONArray(json);
             Logger.debug(jsonArray.length()+"");
@@ -64,21 +66,18 @@ public class Application extends Controller {
             e = null;
             return json;
         }
+
         JSONObject jsonObject = null;
-        List list = new ArrayList<DateTime>();
-        String dateTime = null;
-        DateTime joda = null;
-        Map<DateTime, JSONObject> map = new HashMap<DateTime, JSONObject>();
+        List list = new ArrayList<JSONObject>();
+
         Logger.debug("\n\n********** unsorted ****************");
         for (int i=0; i<jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
-                dateTime = jsonObject.getString("duetime");
-                joda = DateTime.parse(dateTime);
-                Logger.debug(joda+"");
-                // payload
-                list.add(joda);
-                map.put(joda, jsonObject);
+                //dateTime = jsonObject.getString("duetime");
+                //joda = DateTime.parse(dateTime);
+                Logger.debug(jsonObject+"");
+                list.add(jsonObject);
             } catch (Exception e) {
                 json = e.getMessage();
                 Logger.error(json + ExceptionUtils.getStackTrace(e), e);
@@ -87,25 +86,14 @@ public class Application extends Controller {
             }
         }
 
-        Collections.sort(list);
+        Collections.sort(list, new Application().new CustomComparator());
+
         StringBuilder sb = new StringBuilder("");
         Logger.debug("\n\n===== sorted ======================");
         sb.append("[");
         for (int ii=0; ii<list.size(); ii++) {
             Logger.debug(list.get(ii)+"");
-            sb.append("{");
-            try {
-                sb.append("\"id\":\"" + map.get(list.get(ii)).getInt("id") + "\",");
-                sb.append("\"name\":\"" + map.get(list.get(ii)).getString("name") + "\",");
-                sb.append("\"duetime\":\"" + map.get(list.get(ii)).getString("duetime") + "\",");
-                sb.append("\"jointime\":\"" + map.get(list.get(ii)).getString("jointime") + "\"");
-            } catch (Exception e) {
-                json = e.getMessage();
-                Logger.error(json + ExceptionUtils.getStackTrace(e), e);
-                e = null;
-                return json;
-            }
-            sb.append("}");
+            sb.append(list.get(ii)+"");
             if (ii < (list.size()-1))
                 sb.append(",");
         }
@@ -113,9 +101,29 @@ public class Application extends Controller {
 
         json = sb.toString();
     
+        Logger.debug(json);
+
         return json;
 
     }
+
+    public class CustomComparator implements Comparator<JSONObject> {
+
+        @Override
+        public int compare(JSONObject a, JSONObject b) {
+            try {
+                DateTime aDT = DateTime.parse(a.getString("duetime")); 
+                DateTime bDT = DateTime.parse(b.getString("duetime")); 
+                return aDT.isAfter(bDT) ? 1 : aDT.isBefore(bDT) ? -1 : 0;
+            } catch (Exception e) {
+                Logger.error(e.getMessage() + " " + ExceptionUtils.getStackTrace(e), e);
+                e = null;
+            }
+            return 0;
+        }
+
+    }
+
 
 }
 

@@ -31,45 +31,12 @@ public class SortTest extends FunctionalTest {
     public void testThatSortWorks() {
 
         System.out.println("/sortJson");
-        Map<String, String> paramMap = new HashMap<String, String>();
-        Map<String, File> fileMap = new HashMap<String, File>();
-        paramMap.put("json", jsonUnsorted);
+        //Map<String, String> paramMap = new HashMap<String, String>();
+        //Map<String, File> fileMap = new HashMap<String, File>();
+        //paramMap.put("json", jsonUnsorted);
         //fileMap.put("xmlFile", new File("test/item.xml);
-        Response response = POST("/sortJson", paramMap, fileMap);
-        assertIsOk(response);
-        System.out.println(response);
-        assertEquals(jsonSorted, getContent(response));
-        System.out.println("**********"+jsonSorted+"***********");
-        System.out.println("#########"+getContent(response)+"#########");
-
-    }
-
-    @Test
-    public void testThatSortWorksTreeSet() {
-
-        System.out.println("/sortJsonAlternativeTreeSet");
-        Map<String, String> paramMap = new HashMap<String, String>();
-        Map<String, File> fileMap = new HashMap<String, File>();
-        paramMap.put("json", jsonUnsorted);
-        //fileMap.put("xmlFile", new File("test/item.xml);
-        Response response = POST("/sortJsonAlternativeTreeSet", paramMap, fileMap);
-        assertIsOk(response);
-        System.out.println(response);
-        assertEquals(jsonSorted, getContent(response));
-        System.out.println("**********"+jsonSorted+"***********");
-        System.out.println("#########"+getContent(response)+"#########");
-
-    }
-
-    @Test
-    public void testThatSortWorksTreeMap() {
-
-        System.out.println("/sortJsonAlternativeTreeMap");
-        Map<String, String> paramMap = new HashMap<String, String>();
-        Map<String, File> fileMap = new HashMap<String, File>();
-        paramMap.put("json", jsonUnsorted);
-        //fileMap.put("xmlFile", new File("test/item.xml);
-        Response response = POST("/sortJsonAlternativeTreeMap", paramMap, fileMap);
+        //Response response = POST("/sortJson", paramMap, fileMap).withBody("");
+        Response response = POST(new Request(), "/sortJson", "application/json", jsonUnsorted); 
         assertIsOk(response);
         System.out.println(response);
         assertEquals(jsonSorted, getContent(response));
